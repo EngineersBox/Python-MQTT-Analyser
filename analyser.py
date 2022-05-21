@@ -12,7 +12,7 @@ TESTING_DELAYS = [0, 10, 20, 50, 100, 500]
 
 CLIENT_ID = "analyser"
 HOSTNAME = "localhost"
-PORT = 1332
+PORT = 1883
 
 results = {}
 
@@ -33,10 +33,10 @@ def main():
             sub.registerSubscribeEventHandler(lambda mc, u, ms: subscribeHandler(delay, qos))
             pub.registerPublishEventHandler(lambda mc, u, ms: sub.subscribe(RESPONSE_TOPIC.format(qos=qos, delay=delay), qos))
 
-            pubThread = threading.Thread(target=pub.publish, args=[REQUEST_TOPIC, qos, RESPONSE_TOPIC.format(qos=qos, delay=delay)])
+            pubThread = threading.Thread(target=pub.publish, args=[REQUEST_TOPIC, REQUEST_QOS, RESPONSE_TOPIC.format(qos=qos, delay=delay)])
             pubThread.setDaemon(True)
             pubThread.start()
-            sleep(40 * (qos + 1))
+            sleep(2 * (qos + 1))
             sub.disconnect()
             sub.connect()
             print(results)

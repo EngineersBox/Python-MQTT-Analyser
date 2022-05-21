@@ -9,7 +9,7 @@ FILLER_MSG = "filler"
 
 CLIENT_ID = "pubcontroller"
 HOSTNAME = "localhost"
-PORT = 1332
+PORT = 1883
 
 qos = None
 delay = None
